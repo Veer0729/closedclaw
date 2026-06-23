@@ -31,3 +31,15 @@ This project was created using `bun init` in bun v1.3.11. [Bun](https://bun.com)
 
 # bun link
 > this tells my bun to register my command globally as a tool
+
+# ToolExecutor — the implementation
+Raw TypeScript/Node.js code
+Knows nothing about AI
+Just does the actual work: reads files, writes files, checks paths etc.
+Could be used by anything — a CLI, a web server, a test
+
+# agent_tools — the AI interface
+Wraps ToolExecutor in a format the AI model understands
+Provides descriptions so the AI knows when to use each tool
+Defines input schemas so the AI knows what to pass
+Handles the communication layer between AI and code

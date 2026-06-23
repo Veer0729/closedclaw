@@ -191,6 +191,18 @@ export class ToolExecutor {
         }
       }
     };
+
+    if (fs.statSync(abs).isDirectory()) walk(abs, "");
+    else lines.push(path.relative(this.config.codebasePath, abs));
+
+    const out = lines.sort().join("\n");
+    this.tracker.log({
+      type: "code_analysis",
+      path: this.norm(rel),
+      details: { after: out, toolName: "list_files" },
+      status: "executed",
+    });
+    return out || "(empty)";
   }
 
     searchFiles(
@@ -415,5 +427,10 @@ export class ToolExecutor {
     }
 
     return { errors };
+  }
+
+  clearStaging(): void{
+    this.overlay.clear()
+    this.deleted.clear()
   }
 }
